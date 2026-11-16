@@ -13,3 +13,4 @@ edge-кейсы, слабые места, вопросы для самопров
 |---|------|------|--------|-----------|
 | 1 | 2026-10-31 | NULL-семантика: `EXISTS` / `NOT EXISTS` / `IN` / `NOT IN` / `IS [NOT] DISTINCT FROM` | [№1](THEORY_NOTES.md#note-1) | — |
 | 2 | 2026-11-01 | Semi join и anti join: логика, формы записи, планы, NULL-ловушки | [№2](THEORY_NOTES.md#note-2) | — |
+| 3 | 2026-11-09 | Статистика планировщика и VACUUM: актуальность, autovacuum, bloat, freeze, мониторинг | [№3](THEORY_NOTES.md#note-3) | — |
