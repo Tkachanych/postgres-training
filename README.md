@@ -21,7 +21,8 @@
 
 - `task.md` — условие, ожидаемый результат, ограничения и дополнительный вопрос;
 - `schema.sql` — идемпотентный DDL с тестовыми данными (`DROP` → `CREATE` → `INSERT` → `ANALYZE`);
-- `solution.sql` — решение ученика.
+- `solution.sql` — решение ученика;
+- `theory-answers.md` — ответы на вопросы по теории для новых уроков.
 
 После выдачи или изменения статуса урок фиксируется в `LESSONS.md`.
 
@@ -36,27 +37,24 @@
 
 ## Окружение
 
-Для практики используется PostgreSQL в Docker. Пример для урока 03:
+Все уроки используют один контейнер. Запусти его из корня проекта:
 
 ```powershell
-# запустить контейнер (если ещё не запущен)
-docker run --name postgres -e POSTGRES_PASSWORD=postgres -p 5432:5432 -d postgres:18-alpine
-
-# залить схему урока
-docker cp lessons/03-stats-vacuum/schema.sql postgres:/tmp/schema03.sql
-docker exec postgres psql -U postgres -d lesson03 -v ON_ERROR_STOP=1 -f /tmp/schema03.sql
-
-# подключиться
-docker exec -it postgres psql -U postgres -d lesson03
+docker compose up -d --wait
 ```
 
-`psql` также можно использовать с хоста: `localhost:5432`, пользователь
-`postgres`, пароль `postgres`.
+В DBeaver укажи PostgreSQL, хост `127.0.0.1`, порт `55433`, логин
+`student` и пароль `lesson03`. В поле **Database** выбери базу урока
+из таблицы ниже.
 
-## Текущие уроки
+| База | Урок |
+|---|---|
+| `lesson01` | [Оконные функции](lessons/01-window-functions/task.md) |
+| `lesson02` | [Индексы и keyset-пагинация](lessons/02-indexes-keyset/task.md) |
+| `lesson03` | [Статистика и VACUUM](lessons/03-stats-vacuum/task.md) |
+| `lesson04` | [Конкурентные транзакции](lessons/04-concurrent-transactions/task.md) |
 
-- `01-window-functions` — оконные функции и дневная активность;
-- `02-indexes-keyset` — композитный индекс и keyset-пагинация;
-- `03-stats-vacuum` — статистика планировщика, `ANALYZE`, `VACUUM`, visibility map.
+На пустом томе Docker инициализирует все базы автоматически. Команда
+`docker compose stop` останавливает сервер с сохранением данных.
 
-Актуальные статусы — в [`LESSONS.md`](LESSONS.md).
+Актуальные статусы — в [LESSONS.md](LESSONS.md).

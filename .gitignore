@@ -20,3 +20,6 @@ __pycache__/
 Thumbs.db
 desktop.ini
 .DS_Store
+
+# Резервная копия локальных файлов до объединения
+/.merge-backup/

@@ -1,6 +1,6 @@
 -- Урок 03. Лаборатория: статистика планировщика и VACUUM.
 -- Идемпотентный скрипт: можно перепроливать сколько угодно раз.
--- Подключение: psql -U postgres -d lesson03
+-- Подключение: база lesson03
 
 DROP TABLE IF EXISTS parcels CASCADE;
 DROP TABLE IF EXISTS customers CASCADE;

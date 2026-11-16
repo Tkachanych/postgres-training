@@ -1,16 +1,15 @@
 ---
 name: greeting
-description: Use at the very start of every new session in this PostgreSQL training repo, before any lesson or task. Asks the student's name and whether they are learning a new topic or reviewing an old one.
+description: Use at the very start of every new study session in this PostgreSQL training repo, before any lesson or task. Asks the student's name and whether they are learning a new topic or reviewing an old one.
 ---
 
 # Приветствие ученика
 
-Этот скилл запускается первым делом в каждой новой сессии — до выдачи задачи,
-до чтения `LESSONS.md` и до любых других действий.
+Этот скилл запускается первым делом на каждом новом занятии до выдачи задачи или разбора теории. Обслуживание проекта не считается занятием.
 
 ## Что сделать
 
-Задай ученику два вопроса (можно одним сообщением, оба обязательны):
+Задай ученику два вопроса (можно одним сообщением, задавай только те, на которые ещё нет ответа):
 
 1. **Как тебя зовут?**
 2. **Ты изучаешь новую тему, повторяешь старую или хочешь разобрать теорию?**
@@ -24,5 +23,5 @@ description: Use at the very start of every new session in this PostgreSQL train
   отвечай на вопросы и задавай наводящие вопросы на понимание, уроки не создавай.
 - Если ученик выбрал **практику** — переходи к выбору/созданию урока по правилам
   из `AGENTS.md`: отдельная директория в `lessons/`, запись в `LESSONS.md`.
-- Если ученик уже представился в текущей сессии — повторно не спрашивай.
+- Если имя или режим уже известны, повторно не спрашивай.
 - Общение на русском.

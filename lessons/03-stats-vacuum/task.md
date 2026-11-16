@@ -10,20 +10,9 @@
 
 ## Подготовка
 
-Контейнер уже запущен, база `lesson03` создана, схема залита.
-
-Если нужно перепролить схему с нуля:
-
-```powershell
-docker cp lessons/03-stats-vacuum/schema.sql postgres:/tmp/schema03.sql
-docker exec postgres psql -U postgres -d lesson03 -v ON_ERROR_STOP=1 -f /tmp/schema03.sql
-```
-
-Подключение:
-
-```powershell
-docker exec -it postgres psql -U postgres -d lesson03
-```
+Подключись к `lesson03` в DBeaver по [инструкции проекта](../../README.md).
+Чтобы начать лабораторию заново, выполни `schema.sql` как SQL-скрипт в этой базе.
+Он пересоздаёт таблицы `parcels` и `customers`.
 
 Важно: на таблице `parcels` **намеренно выключен autovacuum** — чтобы этапы
 были воспроизводимы. В продакшене так делать нельзя. Все действия с
@@ -67,7 +56,7 @@ SELECT count(*) FROM parcels WHERE status = 'failed';
 | total | ~70 MB |
 | `n_live_tup` | 300000 |
 | `n_dead_tup` | 0 |
-| `n_mod_since_analyze` | 0 |
+| `n_mod_since_analyze` | Обычно 0. Если загрузка данных и `ANALYZE` прошли в одной транзакции, счётчик может включать 300000 вставок |
 | `last_analyze` | заполнен |
 | `last_autoanalyze` | NULL |
 | `n_distinct` для `status` | 4 |
@@ -82,7 +71,7 @@ SELECT count(*) FROM parcels WHERE status = 'failed';
 План для `count(*) ... WHERE status = 'failed'`:
 
 - `Index Only Scan using parcels_status_idx`;
-- оценка `rows` ≈ 350 (может гулять примерно в диапазоне 280–360 из-за выборки), факт `rows` = 300;
+- оценка `rows` порядка 300 и зависит от выборки `ANALYZE`, факт `rows` = 300;
 - **`Heap Fetches: 300`**;
 - время порядка 1 мс.
 
@@ -97,6 +86,6 @@ SELECT count(*) FROM parcels WHERE status = 'failed';
 1. `solution.sql` с запросами этапа 1.
 2. Краткий отчёт: какие значения получились, совпала ли оценка с фактом,
    какой план выбрал планировщик.
-3. Ответ на дополнительный вопрос.
+3. Ответ на дополнительный вопрос в [theory-answers.md](theory-answers.md).
 
 После проверки выдам этап 2.

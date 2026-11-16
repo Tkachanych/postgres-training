@@ -1,0 +1,24 @@
+name: postgres-lesson-03
+services:
+  db:
+    image: postgres:17
+    environment:
+      POSTGRES_DB: lesson03
+      POSTGRES_USER: student
+      POSTGRES_PASSWORD: lesson03
+    ports:
+      - "127.0.0.1:55433:5432"
+    volumes:
+      - pgdata:/var/lib/postgresql/data
+      - ./lessons/01-window-functions/schema.sql:/lessons/lesson01.sql:ro
+      - ./lessons/02-indexes-keyset/schema.sql:/lessons/lesson02.sql:ro
+      - ./lessons/03-stats-vacuum/schema.sql:/lessons/lesson03.sql:ro
+      - ./lessons/04-concurrent-transactions/schema.sql:/lessons/lesson04.sql:ro
+      - ./init-lessons.sql:/docker-entrypoint-initdb.d/01-lessons.sql:ro
+    healthcheck:
+      test: ["CMD", "pg_isready", "-h", "127.0.0.1", "-U", "student", "-d", "lesson03"]
+      interval: 2s
+      timeout: 3s
+      retries: 20
+volumes:
+  pgdata:
